@@ -5,6 +5,8 @@ normae是基于[fis3](http://fis.baidu.com/fis3/index.html)的拉勾网前端解
 * 采用amd模块化开发方案
 * 采用bower管理第三方依赖
 
+阅读本文档前，建议先把[fis3的文档](http://fis.baidu.com/fis3/docs/beginning/intro.html)阅读下，很多涉及到fis3的内容都没有提及，请查看相应的文档。
+
 ## 目录规范
 ```javascript
 site //能独立提供服务，具有单独二级域名的产品线
@@ -183,12 +185,22 @@ require(['./module/a'])
 ```
 加了这段注释的异步用法就是真正的异步用法了。
 
-说了css和js，还有一个前端模版的问题，拉勾之前的前端解决方案idt中，前端模版会通过html2js这样的node组件编译成js文件，在通过amd loader加载进来，在fis中提供了一种更简单的方式，将前端模版直接插入到js文件中，具体是通过fis内容嵌入能力实现的：
+说了css和js，还有一个前端模版的问题，拉勾之前的前端解决方案idt中，前端模版会通过html2js这样的node组件编译成js文件，再通过amd loader加载进来，在fis中提供了一种更简单的方式，将前端模版内容直接插入到js文件中，具体是通过fis内容嵌入能力实现的：
 ```javascript
 var template = require("dep/artTemplate/dist/template");
 var tpl = __inline("./tpl/content.tpl");
 var html = template.compile(tpl)({features: result.features});
 $(".container").append(html);
+```
+__inline为编译期函数，在编译期间会把前端模版内容直接替换掉它。
+ 
+之前说了很多打包，在qa和prod的release模式中，自带了allInOne的打包方式，就是所有css文件打包成一个文件，所有js文件打包成一个文件，就像我之前说的并不建议这种粗暴的打包方式，我们可以自己配置打包的方式，其他的零散资源再使用allInOne的方式打包成一个文件。
+打包可以参考如下的方式：
+```javascript
+fis.media('qa').match('common/widget/**.less', {
+    packTo : "/pkg/commonwidget.css"
+});
+fis.media('qa').match('common/widget/**.js', {
+    packTo : "/pkg/commonwidget.js"
 });
 ```
- __inline为编译期函数，在编译期间会把前端模版内容直接替换它。
