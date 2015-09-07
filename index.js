@@ -3,8 +3,6 @@ fis.require.prefixes.unshift('normae');
 fis.cli.name = 'normae';
 fis.cli.info = require('./package.json');
 
-fis.cache.enable = false;
-
 /******************** dev start ********************/
 
 //dep文件夹为bower的下载目录，有大量的冗余资源，可能导致编译失败。
