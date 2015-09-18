@@ -11,6 +11,8 @@ fis.set('project.files', ['!dep/**']);
 
 //模块加载采用amd方案，对应在fis中使用fis3-hook-amd插件。
 //fis3-hook-amd：https://github.com/fex-team/fis3-hook-amd
+//esl.js是实现了amd规范子集的模块加载器。
+//esl.js：https://github.com/ecomfe/esl
 fis.hook('amd', {
     globalAsyncAsSync: true,
     paths: {
@@ -28,20 +30,15 @@ fis.match('*.less', {
     rExt: '.css'
 });
 
-fis.match('*.js', {
+//modules和compontents文件夹下的js文件被认为是模块
+fis.match('**/{modules,compontents}/**.js', {
     isMod: true
 });
 
-//esl.js是实现了amd规范子集的模块加载器，只有isMod设置为false，才不会被fis当作模块解析。
-//esl.js：https://github.com/ecomfe/esl
-fis.match('esl.js', {
-    isMod: false
-});
-
-//本地开发期间，velocity模版需要结合mock文件被编译成html文件，需要fis3-parser-vm插件。
-//fis3-parser-vm：https://github.com/vicerwang/fis3-parser-vm
+//本地开发期间，velocity模版需要结合mock文件被编译成html文件，需要fis-postprocessor-velocity插件。
+//fis-postprocessor-velocity：https://github.com/vicerwang/fis-postprocessor-velocity
 fis.match('**/page/**.html', {
-    parser: fis.plugin('vm')
+    postprocessor: fis.plugin('velocity')
 });
 
 fis.match('**/*', {
@@ -107,7 +104,7 @@ fis.media('qa').match('*.{less,css}', {
 });
 
 fis.media('qa').match('**/page/**.html', {
-    parser: null
+    postprocessor: null
 });
 
 fis.media('qa').match('**/mock/**', {
@@ -158,7 +155,7 @@ fis.media('prod').match('*.{js,html:js}', {
 });
 
 fis.media('prod').match('**/page/**.html', {
-    parser: null
+    postprocessor: null
 });
 
 fis.media('prod').match('**/mock/**', {

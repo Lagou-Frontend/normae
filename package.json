@@ -1,6 +1,6 @@
 {
   "name": "normae",
-  "version": "0.0.1",
+  "version": "0.0.4",
   "description": "front-end integrated solution of Lagou based on fis3",
   "main": "index.js",
   "bin": {
@@ -11,7 +11,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/vicerwang/normae"
+    "url": "https://github.com/Lagou-Frontend/normae"
   },
   "keywords": [
     "Lagou",
@@ -20,17 +20,17 @@
   "author": "vic",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/vicerwang/normae/issues"
+    "url": "https://github.com/Lagou-Frontend/normae/issues"
   },
-  "homepage": "https://github.com/vicerwang/normae",
+  "homepage": "https://github.com/Lagou-Frontend",
   "dependencies": {
     "fis-optimizer-html-minifier": "0.0.9",
-    "fis-parser-less": "^0.1.3",
-    "fis3": "^3.2.0",
-    "fis3-hook-amd": "^0.1.0",
-    "fis3-parser-vm": "0.0.2",
-    "fis3-postpackager-loader": "^1.3.2",
-    "liftoff": "^2.1.0",
-    "minimist": "^1.2.0"
+    "fis-parser-less": "0.1.3",
+    "fis-postprocessor-velocity": "0.0.2",
+    "fis3": "3.2.0",
+    "fis3-hook-amd": "0.1.0",
+    "fis3-postpackager-loader": "1.3.2",
+    "liftoff": "2.1.0",
+    "minimist": "1.2.0"
   }
 }
