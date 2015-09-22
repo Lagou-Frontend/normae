@@ -1,6 +1,6 @@
 {
   "name": "normae",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "front-end integrated solution of Lagou based on fis3",
   "main": "index.js",
   "bin": {
