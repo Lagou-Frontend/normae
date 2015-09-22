@@ -30,8 +30,8 @@ fis.match('*.less', {
     rExt: '.css'
 });
 
-//modules和compontents文件夹下的js文件被认为是模块
-fis.match('**/{modules,compontents}/**.js', {
+//widgets,modules和compontents文件夹下的js文件被认为是模块
+fis.match('**/{widgets,modules,compontents}/**.js', {
     isMod: true
 });
 

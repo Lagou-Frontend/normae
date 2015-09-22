@@ -18,7 +18,7 @@ site //能独立提供服务，具有单独二级域名的产品线
  | | | | ├ popoup.js 
  | | | | └ popoup.less
  | ├ static //非组件模块资源目录，包括模板页面引用的静态资源（favicon.ico）
- | ├ modules //模块，业务逻辑相关
+ | ├ widgets //模块，业务逻辑相关
  | | ├ header 
  | | | | ├ header.html 
  | | | | ├ header.js
@@ -148,12 +148,12 @@ $ normae server start --rewrite
 ## 开发
 
 normae采用的是纯前端的解决方案，所以并没有对velocity模版进行扩展，因此不能直接引入独立的组件模块，只能或者分别引入组件模块的html文件，js文件，less文件，或者将js文件，less文件的依赖关系定义到html里，只引入html文件。<br />
-以之前定义的目录为例，如果/sub/page/index/index.html想引入模块/common/modules/header:
+以之前定义的目录为例，如果/sub/page/index/index.html想引入模块/common/widgets/header:
 
 * 引入html文件
 
 	```html
-	<link rel="import" href="../../../common/widget/header/header.html?__inline" />
+	<link rel="import" href="../../../common/widgets/header/header.html?__inline" />
 	```
 	我们并没有使用velocity模板自带的#parse语法，因为这种引入模板片段的方法只有在用户访问页面时，服务器才会将模板片段合并成一个完整的文件并编译输出，但是我们采用的是纯前端的解决方案，并没有扩展velocity模板的语法，是无法处理这种运行时的问题的，比如模板片段中引用资源的路径问题，以及无法将模板对css，js文件的引用链接最后统一放置在完整页面的合适位置，因此我们转而将合并模板片段的时间提前到发布期，借助fis的内容嵌入能力，实现了模板片段的开发分离，发布合并，事实上最后放到服务器上的是包括所有模板片段的完整的velocity模版页面。
 	
@@ -162,7 +162,7 @@ normae采用的是纯前端的解决方案，所以并没有对velocity模版进
 	当然可以直接使用下面的方式引入less文件：
 	
 	```html
-	<link rel="stylesheet" href="../../../common/widget/header/header.less" />
+	<link rel="stylesheet" href="../../../common/widgets/header/header.less" />
 	```
 	但是当页面中需要引入很多的模块对应的less文件时，那么你还可以在每一个html文件对应的入口less文件中像下面这样使用：
 	
@@ -177,11 +177,11 @@ normae采用的是纯前端的解决方案，所以并没有对velocity模版进
 	```less
 	/**
 	 * index.css
-	 * @require ../../../common/widget/header/header.less
+	 * @require ../../../common/widgets/header/header.less
 	 */
 	```
  　 
-	这里可能也有同学会问为什么在less文件中没有使用less自带的import语法来引入各模块的less文件，那是因为如果使用import的方式，那么最后只能打包成一个文件，这是一种非常粗暴的打包方式，而我们想要的方案是可以根据我们在fis-conf.js的配置来随心所欲地打包，比如将header.less和footer.less打包成commonModules.css，那么所有的页面都可以享受commonModules.css缓存的好处了，而不是每一个页面的css文件都包含有header.less和footer.less的部分，因此我们采用的是fis中在css文件声明依赖css文件的方式，意思就是说，想要加载index.less，需要首先加载header.less。
+	这里可能也有同学会问为什么在less文件中没有使用less自带的import语法来引入各模块的less文件，那是因为如果使用import的方式，那么最后只能打包成一个文件，这是一种非常粗暴的打包方式，而我们想要的方案是可以根据我们在fis-conf.js的配置来随心所欲地打包，比如将header.less和footer.less打包成commonwidgets.css，那么所有的页面都可以享受commonwidgets.css缓存的好处了，而不是每一个页面的css文件都包含有header.less和footer.less的部分，因此我们采用的是fis中在css文件声明依赖css文件的方式，意思就是说，想要加载index.less，需要首先加载header.less。
 	
 * 引入js文件
 
@@ -189,9 +189,9 @@ normae采用的是纯前端的解决方案，所以并没有对velocity模版进
 	
 	```html
 	<script src="../../../dep/esl/src/esl.js"></script>
-	<script src="../../../common/widget/header/header.js"></script>
+	<script src="../../../common/widgets/header/header.js"></script>
 	<script>
-		require(["/common/widget/header/header"]);
+		require(["/common/widgets/header/header"]);
 	</script>
 	```
 	也可以像less文件那样，在js的入口文件中声明依赖来引入js文件：
@@ -208,7 +208,7 @@ normae采用的是纯前端的解决方案，所以并没有对velocity模版进
 	
 	```javascript
 	define(function (require, exports, module) {
-		require("../../../common/widget/header/header");
+		require("../../../common/widgets/header/header");
 	});
 	```
 	normae采用的是amd的模块化开发方案，amd中require([])为异步加载的用法，而且作为加载入口文件时也只能使用这种用法，但是目前出于打包等方面的考虑，最后发布时的js加载方案使用的是把js放在body底部的同步加载方案，主要是通过设置fis-hook-amd插件的globalAsyncAsSync属性为true实现的，这样异步加载的js模块都会默认改为同步加载，那如果确实需要异步加载一个js模块怎么办，很简单：
@@ -237,10 +237,10 @@ normae采用的是纯前端的解决方案，所以并没有对velocity模版进
 	打包可以参考如下的方式：
 	
 	```javascript
-	fis.media('qa').match('common/modules/**.less', {
-	    packTo : "/pkg/commonModules.css"
+	fis.media('qa').match('common/widgets/**.less', {
+	    packTo : "/pkg/commonwidgets.css"
 	});
-	fis.media('qa').match('common/modules/**.js', {
-	    packTo : "/pkg/commonModules.js"
+	fis.media('qa').match('common/widgets/**.js', {
+	    packTo : "/pkg/commonwidgets.js"
 	});
 	```
