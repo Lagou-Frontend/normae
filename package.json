@@ -1,6 +1,6 @@
 {
   "name": "normae",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "front-end integrated solution of Lagou based on fis3",
   "main": "index.js",
   "bin": {
@@ -31,6 +31,7 @@
     "fis3-hook-amd": "0.1.0",
     "fis3-postpackager-loader": "1.3.2",
     "liftoff": "2.1.0",
-    "minimist": "1.2.0"
+    "minimist": "1.2.0",
+    "normae-lint-html": "0.0.1"
   }
 }

@@ -20,6 +20,10 @@ fis.hook('amd', {
     }
 });
 
+fis.match('*.html', {
+    lint: fis.plugin('html')
+});
+
 //less的混合样式文件，只会被其他less文件import，因此不需要单独发布。
 fis.match(/^(.*)mixin\.less$/i,{
     release: false
