@@ -24,6 +24,28 @@ fis.match('*.html', {
     lint: fis.plugin('html')
 });
 
+fis.match('*.html', {
+    parser: function(content) {
+        var globalReg = /<!--\s*fis-([^-]+)-start\s*-->(.|[\r\n\t])*?<!--\s*fis-([^-]+)-end\s*-->/ig;
+        var reg       = /<!--\s*fis-([^-]+)-start\s*-->(.|[\r\n\t])*?<!--\s*fis-([^-]+)-end\s*-->/i;
+        
+        var arr = content.match(globalReg);
+        if(arr !== null) {
+            arr.forEach(function(code) {
+                var mediaInfo = code.match(reg);
+                if(mediaInfo[1] === mediaInfo[3]) {
+                    var medias = mediaInfo[1].split('|');
+                    var media = fis.project.currentMedia();
+                    if(medias.indexOf(media) === -1) {
+                        content = content.replace(code, '');
+                    }
+                }
+            });
+        }
+        return content;
+    }
+});
+
 //less的混合样式文件，只会被其他less文件import，因此不需要单独发布。
 fis.match(/^(.*)mixin\.less$/i,{
     release: false

@@ -230,7 +230,46 @@ normae采用的是纯前端的解决方案，所以并没有对velocity模版进
 	$(".container").append(html);
 	```
 	__inline为编译期函数，在编译期间会把前端模版内容直接替换掉它。
-	
+* ignore html代码
+
+  可以通过在html中添加注释来使部分html代码在指定的release模式下才能release，其他模式将被忽略。
+    
+  source code
+  
+  ```html
+  <div>all release</div>
+  
+  <!-- fis-dev-start -->
+  <div>dev release</div>
+  <!-- fis-dev-end -->
+  
+  <!-- fis-qa|prod-start -->
+  <div>qa release or prod release</div>
+  <!-- fis-qa|prod-end -->
+  ```
+  release code
+  
+  * ```normae release```
+		
+		```html
+		<div>all release</div>
+		  
+		<!-- fis-dev-start -->
+		<div>dev release</div>
+		<!-- fis-dev-end -->
+		```
+	* ```normae release qa``` or ```normae release prod```
+			
+		```html
+		<div>all release</div>
+		  
+		<!-- fis-qa|prod-start -->
+		<div>qa release or prod release</div>
+		<!-- fis-qa|prod-end -->
+		```
+		
+	不支持嵌套，开始和结束注释标签中的release模式必须一致，支持多个release模式，用' | '连接。
+
 * 打包方式
  
 	在qa和prod的release模式中，自带了allInOne的打包方式，就是页面的所有css文件打包成一个文件，所有js文件打包成一个文件，就像之前说的并不建议这种粗暴的打包方式，其实我们可以自己配置打包的方式，其他的零散资源再使用allInOne的方式打包成一个文件。<br />
