@@ -249,7 +249,7 @@ normae采用的是纯前端的解决方案，所以并没有对velocity模版进
   ```
   release code
   
-  * ```normae release```
+    * ```normae release```
 		
 		```html
 		<div>all release</div>
@@ -259,7 +259,7 @@ normae采用的是纯前端的解决方案，所以并没有对velocity模版进
 		<!-- fis-dev-end -->
 		```
 	* ```normae release qa``` or ```normae release prod```
-			
+	
 		```html
 		<div>all release</div>
 		  
@@ -267,8 +267,7 @@ normae采用的是纯前端的解决方案，所以并没有对velocity模版进
 		<div>qa release or prod release</div>
 		<!-- fis-qa|prod-end -->
 		```
-		
-	不支持嵌套，开始和结束注释标签中的release模式必须一致，支持多个release模式，用' | '连接。
+    不支持嵌套，开始和结束注释标签中的release模式必须一致，支持多个release模式，用' | '连接。
 
 * 打包方式
  
