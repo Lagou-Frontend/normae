@@ -28,7 +28,7 @@ fis.match('*.html', {
     parser: function(content) {
         var globalReg = /<!--\s*fis-([^-]+)-start\s*-->(.|[\r\n\t])*?<!--\s*fis-([^-]+)-end\s*-->/ig;
         var reg       = /<!--\s*fis-([^-]+)-start\s*-->(.|[\r\n\t])*?<!--\s*fis-([^-]+)-end\s*-->/i;
-        
+
         var arr = content.match(globalReg);
         if(arr !== null) {
             arr.forEach(function(code) {
@@ -56,15 +56,18 @@ fis.match('*.less', {
     rExt: '.css'
 });
 
-//widgets,modules和components文件夹下的js文件被认为是模块
-fis.match('**/{widgets,modules,components}/**.js', {
+//widgets,modules,components和page文件夹下的js文件被认为是模块
+//编译时可以自动包裹factory函数：define(function(require, exports, module) {})
+fis.match('**/{widgets,modules,components,page}/**.js', {
     isMod: true
 });
 
 //本地开发期间，velocity模版需要结合mock文件被编译成html文件，需要fis-postprocessor-velocity插件。
 //fis-postprocessor-velocity：https://github.com/vicerwang/fis-postprocessor-velocity
 fis.match('**/page/**.html', {
-    postprocessor: fis.plugin('velocity')
+    postprocessor: fis.plugin('velocity', {
+        commonMock: 'test/common/common.js'
+    })
 });
 
 fis.match('**/*', {
@@ -76,7 +79,7 @@ fis.match('*.html', {
     release: '/template/$0'
 });
 
-fis.match('/mock/**', {
+fis.match('/test/**', {
     release: '/$0'
 });
 
@@ -117,7 +120,7 @@ fis.match('::package', {
 
 /******************** qa start ********************/
 
-fis.media('qa').match('*.{css,js}', {
+fis.media('qa').match('*.{less,css,js}', {
     useHash: true
 });
 
@@ -133,7 +136,7 @@ fis.media('qa').match('**/page/**.html', {
     postprocessor: null
 });
 
-fis.media('qa').match('**/mock/**', {
+fis.media('qa').match('**/test/**', {
     release: false
 });
 
@@ -155,7 +158,7 @@ fis.media('qa').match('::package', {
 
 /******************** prod start ********************/
 
-fis.media('prod').match('*.{css,js}', {
+fis.media('prod').match('*.{less,css,js}', {
     useHash: true
 });
 
@@ -184,7 +187,7 @@ fis.media('prod').match('**/page/**.html', {
     postprocessor: null
 });
 
-fis.media('prod').match('**/mock/**', {
+fis.media('prod').match('**/test/**', {
     release: false
 });
 

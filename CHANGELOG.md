@@ -1,3 +1,9 @@
+## 0.0.10 / 2015-10-16
+
+* 修改目录规范，模拟数据的文件夹名由`mock`改为`test`，原因是fis内置的node server只能转发post的请求到根目录下的test文件夹中的模拟json文件
+* `page`文件夹下的js文件也被认为是模块
+* 在`qa/prod`的release模式中，为less文件添加了useHash
+
 ## 0.0.9 / 2015-09-25
 
 添加逻辑：通过注释可以控制部分html代码只有在指定的release模式才能release，其他release模式将被删除。
