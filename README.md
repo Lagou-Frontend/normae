@@ -91,7 +91,7 @@ normae的三种release方式只提供了一些基本的匹配处理规则，如�
 
 ### 本地调试
 ```shell
-$ normae server start --rewrite
+$ normae server start
 ```
 其他命令以及参数请参考[fis相关文档](http://fis.baidu.com/fis3/docs/beginning/debug.html#%E5%90%AF%E5%8A%A8)。
 
