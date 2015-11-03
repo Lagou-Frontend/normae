@@ -101,6 +101,11 @@ fis.match('bower.json', {
     release: false
 });
 
+//文档不需要发布。
+fis.match('*.md', {
+    release: false
+});
+
 //本地调试时，需要将server.conf文件发布到config文件夹下。
 fis.match('server.conf', {
     release: '/config/server.conf'
@@ -136,7 +141,12 @@ fis.media('qa').match('**/page/**.html', {
     postprocessor: null
 });
 
-fis.media('qa').match('**/test/**', {
+//example不需要发布。
+fis.media('qa').match('/example/**', {
+    release: false
+});
+
+fis.media('qa').match('/test/**', {
     release: false
 });
 
@@ -175,7 +185,7 @@ fis.media('prod').match('*.png', {
     optimizer: fis.plugin('png-compressor')
 });
 
-fis.media('prod').match('*.{js,html:js}', {
+fis.media('prod').match('*.js', {
     optimizer: fis.plugin('uglify-js', {
         mangle: {
             except: 'exports, module, require, define'
@@ -187,7 +197,12 @@ fis.media('prod').match('**/page/**.html', {
     postprocessor: null
 });
 
-fis.media('prod').match('**/test/**', {
+//example不需要发布。
+fis.media('prod').match('/example/**', {
+    release: false
+});
+
+fis.media('prod').match('/test/**', {
     release: false
 });
 
