@@ -1,3 +1,9 @@
+## 0.0.11 / 2015-11-03
+
+* 不发布md为后缀的文档
+* qa/prod模式不发布example project
+* 暂时不再压缩html中的javascript代码，原因是如果javascript代码参杂velocity变量，会导致压缩报错
+
 ## 0.0.10 / 2015-10-16
 
 * 修改目录规范，模拟数据的文件夹名由`mock`改为`test`，原因是fis内置的node server只能转发post的请求到根目录下的test文件夹中的模拟json文件
