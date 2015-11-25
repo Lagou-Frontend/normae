@@ -106,8 +106,21 @@ fis.match('*.md', {
     release: false
 });
 
-//本地调试时，需要将server.conf文件发布到config文件夹下。
-fis.match('server.conf', {
+//fis配置文件不需要发布。
+fis.match('fis-conf.js', {
+    release: false
+});
+
+//本地调试时，需要将所有子系统下面的server.conf合并到根目录下的server.conf文件，最后发布到config文件夹下。
+fis.match('/server.conf', {
+    postprocessor: function(content, file) {
+        content = '';
+        var modConnfPaths = fis.util.find(fis.project.getProjectPath(), ['/**/server.conf']);
+        modConnfPaths.forEach(function(modConnfPath) {
+            content += fis.util.read(modConnfPath);
+        });
+        return content;
+    },
     release: '/config/server.conf'
 });
 

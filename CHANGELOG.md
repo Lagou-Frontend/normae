@@ -1,3 +1,14 @@
+## 0.1.0 / 2015-11-25
+
+支持按子系统release，每个模块下都有对应的fis-conf.js和server.conf来配置本模块的releae规则和url转发，通过修改根目录下的fis-conf.js文件中的releaseMods变量，
+来release所有子系统或者指定的子系统：
+
+``` javascript
+var releaseMods = all;
+```
+``` javascript
+var releaseMods = [ 'dashboard' ];
+```
 ## 0.0.12 / 2015-11-23
 
 更新fis-postprocessor-velocity的版本到0.0.4，主要替换了解析velocity模版的引擎组件，旧的引擎会导致如`!${str.length()}`语法无法解析，并且mock数据中的标签默认会被自动转义

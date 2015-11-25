@@ -49,6 +49,8 @@ site //能独立提供服务，具有单独二级域名的产品线
  | | | | ├ content.html
  | | | | ├ content.js
  | | | | └ content.less
+ | ├ fis-conf.js //子系统的fis配置文件
+ | ├ server-conf.js //子系统的url模拟转发配置文件
  ├ .bowerrc //bower配置文件
  ├ bower.json //bower package文件
  ├ fis-conf.js //fis配置文件
@@ -88,6 +90,44 @@ $ npm install bower -g
 	```
 具体配置请参考[这里](https://github.com/vicerwang/normae/blob/master/index.js)。<br />
 normae的三种release方式只提供了一些基本的匹配处理规则，如果想添加适合本项目的特殊规则，如具体的打包规则等，请在项目根目录下的fis-conf.js文件中添加规则来扩展或覆盖基本的规则。
+
+### 按子系统release
+随着子系统的增加，给我们的日常开发带来了以下两个问题
+
+1. 整个系统releae，时间越来越长，自动刷新功能总是延迟很多
+2. `fis-conf.js`，`server.conf`配置文件内容越来越多，变得难以维护
+
+因此，normae在v0.1.0将release的粒度改到子系统的层级，相应地需要在子系统目录下添加fis-conf.js以及server.conf来配置release规则和url转发规则，而根目录下的fis-conf.js以及server.conf则放置一些common的配置。通过修改根目录下的fis-conf.js文件中的releaseMods变量，来release所有子系统或者指定的子系统：
+
+``` javascript
+var releaseMods = [ 'dashboard' ];
+// var releaseMods = all;
+
+var root = fis.project.getProjectPath();
+var confs = fis.util.find(root, '/**/fis-conf.js');
+var path = require('path');
+var mods = [];
+confs.forEach(function(conf) {
+    var mod = path.dirname(path.relative(root, conf));
+    mod !== '.' && mods.push(mod);
+});
+mods.forEach(function(mod) {
+    if (releaseMods === 'all') {
+        require('./' + mod + '/fis-conf');
+    } else if (releaseMods.indexOf(mod) === -1) {
+        fis.match('/' + mod + '/**/*', {
+            release: false
+        });
+    } else {
+        require('./' + mod + '/fis-conf');
+    }
+});
+```
+需要注意以下几点：
+
+* 如果修改了子系统间共同依赖的资源，请release所有的子系统
+* 通过`-wL`参数开启监听改动自动刷新功能后，即使修改了子系统下的fis-conf.js文件，也不会被监听到，请重新输入`normae release -wL`release
+
 
 ### 本地调试
 ```shell
