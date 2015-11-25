@@ -101,7 +101,7 @@ normae的三种release方式只提供了一些基本的匹配处理规则，如�
 
 ``` javascript
 var releaseMods = [ 'dashboard' ];
-// var releaseMods = all;
+// var releaseMods = 'all';
 
 var root = fis.project.getProjectPath();
 var confs = fis.util.find(root, '/**/fis-conf.js');
