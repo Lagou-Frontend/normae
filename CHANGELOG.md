@@ -1,3 +1,10 @@
+## 0.1.1 / 2015-12-09
+
+* 去掉对前端模版的压缩功能，如果artTemplate模版中含有除标签以外的`<`，一般是用做表示小于号，会导致使用fis-optimizer-html-minifier压缩时报错
+* 更新fis-postprocessor-velocity的版本到0.0.5，将mock文件添加到对应的velocity模版的依赖缓存中，在开启`-wL`后，修改mock文件会自动增量release，刷新页面
+* 解决修改子系统下server.conf中的路由还是使用缓存的文件没有变化的问题
+* 在README中更新引入模块组件的方式以及自定义打包的方式
+
 ## 0.1.0 / 2015-11-25
 
 支持按子系统release，每个模块下都有对应的fis-conf.js和server.conf来配置本模块的releae规则和url转发，通过修改根目录下的fis-conf.js文件中的releaseMods变量，
@@ -5,9 +12,7 @@
 
 ``` javascript
 var releaseMods = all;
-```
-``` javascript
-var releaseMods = [ 'dashboard' ];
+// var releaseMods = [ 'dashboard' ];
 ```
 ## 0.0.12 / 2015-11-23
 

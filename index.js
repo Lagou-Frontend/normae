@@ -83,11 +83,8 @@ fis.match('/test/**', {
     release: '/$0'
 });
 
-//前端模版文件需要压缩处理下，依赖fis-optimizer-html-minifier插件。
-//html-minifier： https://github.com/kangax/html-minifier
-//另外在编译期会被内嵌入js文件中，因此不需要发布。
+//在编译期会被内嵌入js文件中，因此不需要发布。
 fis.match('*.tpl',{
-    optimizer: fis.plugin('html-minifier'),
     release : false
 });
 
@@ -108,6 +105,7 @@ fis.match('*.md', {
 
 //fis配置文件不需要发布。
 fis.match('fis-conf.js', {
+    useCache: false,
     release: false
 });
 
@@ -121,6 +119,7 @@ fis.match('/server.conf', {
         });
         return content;
     },
+    useCache: false,
     release: '/config/server.conf'
 });
 
