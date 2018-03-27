@@ -1,5 +1,5 @@
 # normae
-normae是基于[fis3](http://fis.baidu.com/fis3/index.html)的拉勾网前端解决方案
+normae![npm status](https://img.shields.io/npm/v/normae.svg)是基于[fis3](http://fis.baidu.com/fis3/index.html)的拉勾网前端解决方案
 
 * 后端为Java＋Velocity
 * 采用less作为css处理器
@@ -60,10 +60,10 @@ site //能独立提供服务，具有单独二级域名的产品线
 
 ## 使用
 
-### 全局安装normae
+### 本地安装normae
 
 ``` shell
-$ npm install normae -g
+$ npm install normae
 ```
 
 ### 全局安装bower
@@ -151,8 +151,8 @@ $ normae server start
 	* 配置文件每一行为一条规则。
 	* 规则格式为：匹配类型 (空格) 匹配url正则或url (空格) 命中后的目的文件url。
 	* 匹配类型包括rewrite和redirect。
-	 * rewrite：匹配规则后转发到一个文件，同时url修改为访问文件的url。
-	 * redirect：匹配规则后重定向到另一个url。
+	* rewrite：匹配规则后转发到一个文件，同时url修改为访问文件的url。
+	* redirect：匹配规则后重定向到另一个url。
 
 * #### 编译velocity模版
 

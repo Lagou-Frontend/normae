@@ -30,9 +30,10 @@ fis.hook('amd', {
     }
 });
 
-fis.match('*.html', {
-    lint: fis.plugin('html')
-});
+// 暂时不默认提供lint插件
+// fis.match('*.html', {
+//     lint: fis.plugin('html')
+// });
 
 fis.match('*.html', {
     parser: function(content) {
