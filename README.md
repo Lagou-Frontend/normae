@@ -1,5 +1,5 @@
-# normae
-normae![npm status](https://img.shields.io/npm/v/normae.svg)是基于[fis3](http://fis.baidu.com/fis3/index.html)的拉勾网前端解决方案
+# normae ![npm status](https://img.shields.io/npm/v/normae.svg)
+normae是基于[fis3](http://fis.baidu.com/fis3/index.html)的拉勾网前端解决方案
 
 * 后端为Java＋Velocity
 * 采用less作为css处理器
